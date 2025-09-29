@@ -9,6 +9,7 @@ __pycache__/
 .venv/
 venv/
 ENV/
+python/
 *.egg-info/
 
 # VS Code
