@@ -1,2 +1,6 @@
-fastapi
-uvicorn[standard]
+echo fastapi
+echo uvicorn[standard]
+echo sqlmodel
+echo python-dotenv
+echo passlib[bcrypt]
+echo alembic

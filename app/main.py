@@ -1,8 +1,11 @@
 from fastapi import FastAPI
+from .db import init_db
 
-app = FastAPI()
+app = FastAPI(title="eSport Verwaltung API")
+
+# beim Start Tabellen erzeugen
+init_db()
 
 @app.get("/")
-def read_root():
-    return {"message": "Hallo aus deinem eigenen Ordner!"}, {"message": "Probe"}
-    
+def root():
+    return {"status": "ok", "db": "sqlite"}
