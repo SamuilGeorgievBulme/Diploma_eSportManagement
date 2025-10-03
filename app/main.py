@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from .db import init_db
+from .routers.teams import router as teams_router
 
-app = FastAPI(title="eSport Verwaltung API")
-
-# beim Start Tabellen erzeugen
+app = FastAPI(title="eSport Verwaltung API (SQLite)")
 init_db()
+
+app.include_router(teams_router)
 
 @app.get("/")
 def root():
-    return {"status": "ok", "db": "sqlite"}
+    return {"status": "ok"}
