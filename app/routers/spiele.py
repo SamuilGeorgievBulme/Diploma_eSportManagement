@@ -1,7 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session, select, SQLModel
 from ..db import get_session
 from ..models import Spiel
+from typing import Optional
+
+class SpielUpdate(SQLModel):
+    name: str
+    genre: Optional[str] = None
 
 router = APIRouter(prefix="/spiele", tags=["spiele"])
 
@@ -30,7 +35,7 @@ def get_spiel(spiel_id: int, session: Session = Depends(get_session)):
     return obj
 
 @router.put("/{spiel_id}", response_model=Spiel)
-def update_spiel(spiel_id: int, payload: Spiel, session: Session = Depends(get_session)):
+def update_spiel(spiel_id: int, payload: SpielUpdate, session: Session = Depends(get_session)):
     obj = session.get(Spiel, spiel_id)
     if not obj:
         raise HTTPException(404, "Nicht gefunden")
@@ -40,6 +45,7 @@ def update_spiel(spiel_id: int, payload: Spiel, session: Session = Depends(get_s
     session.commit()
     session.refresh(obj)
     return obj
+
 
 @router.delete("/{spiel_id}")
 def delete_spiel(spiel_id: int, session: Session = Depends(get_session)):
